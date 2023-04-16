@@ -1,4 +1,4 @@
-import { Switch } from '@blueprintjs/core';
+// import { Switch } from '@blueprintjs/core';
 import { IconNames } from '@blueprintjs/icons';
 import React from 'react';
 
@@ -76,15 +76,17 @@ export const ControlBarAutorunButtons: React.FC<ControlBarAutorunButtonProps> = 
     </>
   ) : (
     <>
-      {!props.autorunDisabled && (
-        <div className="Switch">
-          <Switch
-            label=""
-            checked={props.isEditorAutorun}
-            onChange={props.handleToggleEditorAutorun}
-          />
-        </div>
-      )}
+      {
+      // !props.autorunDisabled && (
+      //   <div className="Switch">
+      //     <Switch
+      //       label=""
+      //       checked={props.isEditorAutorun}
+      //       onChange={props.handleToggleEditorAutorun}
+      //     />
+      //   </div>
+      // )
+      }
       {showAutoRunIndicator || showStopButton || showRunButton}
       {showDebuggerPause}
       {showDebuggerResume}

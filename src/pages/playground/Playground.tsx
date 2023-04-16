@@ -47,7 +47,7 @@ import {
 } from '../../commons/application/ApplicationTypes';
 import { ExternalLibraryName } from '../../commons/application/types/ExternalTypes';
 import { ControlBarAutorunButtons } from '../../commons/controlBar/ControlBarAutorunButtons';
-import { ControlBarChapterSelect } from '../../commons/controlBar/ControlBarChapterSelect';
+// import { ControlBarChapterSelect } from '../../commons/controlBar/ControlBarChapterSelect';
 import { ControlBarClearButton } from '../../commons/controlBar/ControlBarClearButton';
 import { ControlBarEvalButton } from '../../commons/controlBar/ControlBarEvalButton';
 import { ControlBarExecutionTime } from '../../commons/controlBar/ControlBarExecutionTime';
@@ -314,47 +314,47 @@ const Playground: React.FC<PlaygroundProps> = ({ workspaceLocation = 'playground
     );
   }, [dispatch, handleEditorEval, props, usingRemoteExecution, workspaceLocation]);
 
-  const chapterSelectHandler = React.useCallback(
-    ({ chapter, variant }: { chapter: Chapter; variant: Variant }, e: any) => {
-      const { handleUsingSubst, handleReplOutputClear, handleChapterSelect } = propsRef.current;
-      if ((chapter <= 2 && hasBreakpoints) || selectedTab === SideContentType.substVisualizer) {
-        handleUsingSubst(true);
-      }
-      if (chapter > 2) {
-        handleReplOutputClear();
-        handleUsingSubst(false);
-      }
-
-      const input: Input = {
-        time: Date.now(),
-        type: 'chapterSelect',
-        data: chapter
-      };
-
-      pushLog(input);
-
-      handleChapterSelect(chapter, variant);
-    },
-    [hasBreakpoints, selectedTab, pushLog]
-  );
-
-  const chapterSelect = React.useMemo(
-    () => (
-      <ControlBarChapterSelect
-        handleChapterSelect={chapterSelectHandler}
-        sourceChapter={props.playgroundSourceChapter}
-        sourceVariant={props.playgroundSourceVariant}
-        key="chapter"
-        disabled={usingRemoteExecution}
-      />
-    ),
-    [
-      chapterSelectHandler,
-      props.playgroundSourceChapter,
-      props.playgroundSourceVariant,
-      usingRemoteExecution
-    ]
-  );
+  // const chapterSelectHandler = React.useCallback(
+  //   ({ chapter, variant }: { chapter: Chapter; variant: Variant }, e: any) => {
+  //     const { handleUsingSubst, handleReplOutputClear, handleChapterSelect } = propsRef.current;
+  //     if ((chapter <= 2 && hasBreakpoints) || selectedTab === SideContentType.substVisualizer) {
+  //       handleUsingSubst(true);
+  //     }
+  //     if (chapter > 2) {
+  //       handleReplOutputClear();
+  //       handleUsingSubst(false);
+  //     }
+  //
+  //     const input: Input = {
+  //       time: Date.now(),
+  //       type: 'chapterSelect',
+  //       data: chapter
+  //     };
+  //
+  //     pushLog(input);
+  //
+  //     handleChapterSelect(chapter, variant);
+  //   },
+  //   [hasBreakpoints, selectedTab, pushLog]
+  // );
+  //
+  // const chapterSelect = React.useMemo(
+  //   () => (
+  //     <ControlBarChapterSelect
+  //       handleChapterSelect={chapterSelectHandler}
+  //       sourceChapter={props.playgroundSourceChapter}
+  //       sourceVariant={props.playgroundSourceVariant}
+  //       key="chapter"
+  //       disabled={usingRemoteExecution}
+  //     />
+  //   ),
+  //   [
+  //     chapterSelectHandler,
+  //     props.playgroundSourceChapter,
+  //     props.playgroundSourceVariant,
+  //     usingRemoteExecution
+  //   ]
+  // );
 
   const clearButton = React.useMemo(
     () =>
@@ -585,8 +585,8 @@ const Playground: React.FC<PlaygroundProps> = ({ workspaceLocation = 'playground
     sourceVariant: props.playgroundSourceVariant,
     externalLibrary: ExternalLibraryName.NONE, // temporary placeholder as we phase out libraries
     hidden: selectedTab === SideContentType.substVisualizer,
-    inputHidden: replDisabled,
-    replButtons: [replDisabled ? null : evalButton, clearButton],
+    inputHidden: true,
+    replButtons: [replDisabled ? null : (null && evalButton), clearButton],
     disableScrolling: isSicpEditor
   };
 
@@ -606,12 +606,12 @@ const Playground: React.FC<PlaygroundProps> = ({ workspaceLocation = 'playground
     controlBarProps: {
       editorButtons: [
         autorunButtons,
-        chapterSelect,
+        // chapterSelect,
         usingRemoteExecution || !isSourceLanguage(props.playgroundSourceChapter)
           ? null
           : props.usingSubst
-          ? stepperStepLimit
-          : executionTime
+            ? stepperStepLimit
+            : executionTime
       ]
     },
     editorContainerProps: editorContainerProps,
@@ -641,7 +641,7 @@ const Playground: React.FC<PlaygroundProps> = ({ workspaceLocation = 'playground
       mobileControlBarProps: {
         editorButtons: [
           autorunButtons,
-          chapterSelect,
+          // chapterSelect,
           shareButton,
           isSicpEditor ? null : sessionButtons,
         ]
